@@ -16,26 +16,24 @@
 <body>
 <div class="container">
 
-      <div class="form-signin">
+      <form class="form-signin" id="validForm" action="/forms/userprocess" method="POST">
       <p class="text-center"><a href="../"><img src=../images/logo.png></a></p>
         <h2 class="form-signin-heading text-center">Create your Account</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" name="userEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="userPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-success btn-block" id="signup" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-success btn-block" type="submit">Sign up</button>
 
         <h5>Already have an account? <a href="/forms/loginForm">sign in</a></h5>
-      </div>
+      </form>
      
     </div> <!-- /container -->
     <!-- /.container -->
-    <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
-    <script src="../jsFiles/create.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
+    <script src="../jsFiles/create.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

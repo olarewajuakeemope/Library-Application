@@ -16,7 +16,7 @@
 <body>
 <div class="container">
 
-      <div class="form-signin">
+      <form class="form-signin" id="validForm" action="/forms/loginprocess" method="POST">
        <p class="text-center"><a href="../"><img src=../images/logo.png></a></p>
         <h2 class="form-signin-heading text-center">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -28,20 +28,16 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div> -->
-        <button class="btn btn-lg btn-primary btn-block" id="login" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
         <h5>Don't have an account? <a href="/forms/signupForm">sign up</a></h5>
-      </div>
+      </form>
 
 
     </div> <!-- /container -->
     <!-- /.container -->
-    <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
-    <script src="../jsFiles/auth.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
+        <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

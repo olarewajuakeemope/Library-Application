@@ -1,19 +1,21 @@
 var express = require('express');
 var path = require('path');
-var firebase = require('firebase-admin');
+var firebase = require('firebase');
 var bodyParser = require('body-parser');
-
-
-var serviceAccount = require('./libapp-852f2-firebase-adminsdk-0zzwv-10b597e1f3.json');
 
 var app = express();
 app.use(bodyParser());
 var router = express.Router();
 
-firebase.initializeApp({
-	credential: firebase.credential.cert(serviceAccount),
-	databaseURL: 'https://libapp-852f2.firebaseio.com/'
-});
+  var config = {
+    apiKey: "AIzaSyB89UfsZjSnvda76EdN4qwsjBfhvcqia78",
+    authDomain: "libraryapplication-3e3d5.firebaseapp.com",
+    databaseURL: "https://libraryapplication-3e3d5.firebaseio.com",
+    storageBucket: "libraryapplication-3e3d5.appspot.com",
+    messagingSenderId: "242818936620"
+  };
+
+  firebase.initializeApp(config);
 
 const auth = firebase.auth();
 
@@ -29,8 +31,20 @@ app.get('/', function (req, res) {
 app.use('/forms', router);
 
 app.post('/forms/userprocess', function (req, res) {
-  res.end(JSON.stringify(req.body));
-  console.log(JSON.stringify(req.body));
+  var email = req.body.userEmail;
+  var pass = req.body.userPassword;
+  firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  if (errorCode == 'auth/weak-password') {
+    res.send('The password is too weak.');
+  } else {
+  	res.send(errorMessage);
+    console.log(errorMessage);
+  }
+});
 })
 
 app.post('/forms/loginprocess', function (req, res) {
