@@ -31,18 +31,17 @@ app.get('/', function (req, res) {
 app.use('/forms', router);
 
 app.post('/forms/userprocess', function (req, res) {
-  var email = req.body.userEmail;
-  var pass = req.body.userPassword;
+  var email = req.body.email;
+  var pass = req.body.pass;
   firebase.auth().createUserWithEmailAndPassword(email, pass)
     .catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
-  var errorMessage = error.message;
   if (errorCode == 'auth/weak-password') {
     res.send('The password is too weak.');
   } else {
-  	res.send(errorMessage);
-    console.log(errorMessage);
+  	res.json({error: error});
+    console.log(error);
   }
 });
 })

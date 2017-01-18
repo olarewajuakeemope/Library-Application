@@ -1,37 +1,34 @@
 $(function(){
     $('#validForm').bind('submit', function(e) {
         console.log('submit');
-        $('body').append('<div id="progress">Processing...</div>');
-        if (!is_valid_form()) {
-            return false;
-        }
-
+        $('h5').append('<div id="progress">Processing...</div>');
         e.preventDefault();
         $("#result").html('');
-        var data = {'name' : $('input[name=name]').val(), 'email' : $('input[name=email]').val(), 'phone' : $('input[name=phone]').val(), 'budget' : $('select[name=budget]').val(), 'timeline' : $('select[name=timeline]').val(), 'source' : $('select[name=source]').val(), 'othersource' : $('input[name=othersource]').val(), 'message' : $('textarea[name=message]').val(), 'website' : $('input[name=website]').val(), 'project' : $('select[name=project]').val()};
+        var data = {'email' : $('input[name=userEmail]').val(), 'pass' : $('input[name=userPassword]').val()};
         $.ajax({
-            url: "send-form-email.php",
+            url: "../forms/userprocess",
             type: "post",
             dataType : "json",
             data: data,
             success: function(data) {
-                console.log(data);
-                var alertClass;
-                if(data.error === true){
-                    alertClass = 'alert-error';
+                
+                if(data.error){
+                  console.log(data.error);
+                  $("#result").html(data.error.message);
+                  $('#progress').html('');
                 }else{
-                    alertClass = 'alert-success';
-                    var form = $('#validForm').closest('form');
-                    form.find("input[type=text], textarea, select").val("");
+                    console.log('inside the windows');
+                    window.location.href= "/";
+
                 }
-                $('#progress').fadeOut(1000);
-              $('form#validForm').fadeOut(5000);
-                $("#result").html(returnHtml(alertClass, data.message));
+                
             },
             error: function(data, error) {
-            $('#progress').fadeOut(1000);
-      $("#result").html(returnHtml('alert-error', "Oops! something went wrong, please try again"));
-                alert(error);
+            
+      $("#result").html(' ' + error);
+      console.log(typeof error);
+      $('#progress').html('');
+
       }
         });
         return false;
