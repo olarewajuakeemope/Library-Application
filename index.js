@@ -75,7 +75,7 @@ app.post('/forms/loginprocess', function(req, res) {
         if(user){
           var adminUrl = '/dashboard';
           if (user.uid === adminID) {
-          adminUrl = '/';
+          adminUrl = '/controlpanel';
           console.log(user.uid);
         }
         res.json({url: adminUrl});
@@ -94,6 +94,9 @@ app.get('/dashboard', function(req, res) {
     res.render('pages/index');
 });
 
+app.get('/controlpanel', function(req, res) {
+    res.render('pages/admin');
+});
 //my template engine ends
 
 
