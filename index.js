@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 const adminUID = 's9uc9dexFJXjEnmX3X52jY1YlG12';
 var currID = '';
-require('long-stack-traces');
 
 var app = express();
 app.use(bodyParser.json());
