@@ -2,9 +2,14 @@ var express = require('express');
 var path = require('path');
 var firebase = require('firebase');
 var bodyParser = require('body-parser');
+var exphbs = require('express-handlebars');
+const adminUID = 's9uc9dexFJXjEnmX3X52jY1YlG12';
+var currID = '';
+require('long-stack-traces');
 
 var app = express();
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 var router = express.Router();
 
  
@@ -15,6 +20,11 @@ firebase.initializeApp(config);
 
 const auth = firebase.auth();
 
+app.engine('handlebars', exphbs({ extname: 'handlebars', defaultLayout: 'main', layoutsDir: __dirname + '/views/' }));
+app.set('view engine', 'handlebars');
+app.get('/dashboard', function(req, res) {
+  res.render('home');
+});
 
 app.use('/cssFiles', express.static(__dirname + '/css'));
 app.use('/images', express.static(__dirname + '/img'));
@@ -41,9 +51,14 @@ app.post('/forms/userprocess', function(req, res) {
         console.log('error');
         console.log(error);
       }
-    }).then(function(data){
-    	console.log('data');
-    	res.json({});
+    }).then(function(data) {
+      console.log('data');
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          console.log(user.uid);
+        }
+      });
+      res.json({});
     });
 })
 
@@ -62,17 +77,21 @@ app.post('/forms/loginprocess', function(req, res) {
         console.log('error');
         console.log(error);
       }
-    }).then(function(data){
-    	console.log('data');
-    	res.json({});
+    }).then(function(data) {
+      console.log('data');
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          console.log(user.uid);
+        }
+      });
+      res.json({});
     });
 })
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    console.log(user.uid);
-  }
-});
+app.get('/forms/logout', function(req, res) {
+  firebase.auth().signOut();
+  res.json({});
+})
 
 
 router.get('/loginForm', function(req, res) {

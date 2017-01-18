@@ -18,7 +18,7 @@ $(function(){
                   $('#progress').html('');
                 }else{
                     console.log('inside the windows');
-                    window.location.href= "/";
+                    window.location.href= "/dashboard";
 
                 }
                 

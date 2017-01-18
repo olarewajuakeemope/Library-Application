@@ -13,18 +13,19 @@ $(function(){
             success: function(data) {
                 
                 if(data.error){
+                  console.log('inside the success if');
                   console.log(data.error);
                   $("#result").html(data.error.message);
                   $('#progress').html('');
                 }else{
                     console.log('inside the windows');
-                    window.location.href= "/";
+                    window.location.href= "/dashboard";
 
                 }
                 
             },
             error: function(data, error) {
-            
+      console.log('inside the error');    
       $("#result").html(' ' + error);
       console.log(typeof error);
       $('#progress').html('');
