@@ -68,6 +68,13 @@ app.post('/forms/loginprocess', function(req, res) {
     });
 })
 
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    console.log(user.uid);
+  }
+});
+
+
 router.get('/loginForm', function(req, res) {
   res.sendFile('loginForm.html', { root: path.join(__dirname, './files') });
 })
