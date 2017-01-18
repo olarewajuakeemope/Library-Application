@@ -1,31 +1,36 @@
-(function() {
+$(function(){
+    $('#validForm').bind('submit', function(e) {
+        console.log('submit');
+        $('h5').append('<div id="progress">Processing...</div>');
+        e.preventDefault();
+        $("#result").html('');
+        var data = {'email' : $('input[name=userEmail]').val(), 'pass' : $('input[name=userPassword]').val()};
+        $.ajax({
+            url: "../forms/loginprocess",
+            type: "post",
+            dataType : "json",
+            data: data,
+            success: function(data) {
+                
+                if(data.error){
+                  console.log(data.error);
+                  $("#result").html(data.error.message);
+                  $('#progress').html('');
+                }else{
+                    console.log('inside the windows');
+                    window.location.href= "/";
 
-  // Initialize Firebase
-   
-  var config = {   apiKey: "AIzaSyBR7vDeYtPTpR3VEATN-uX7U29lL7Dy7eI",   authDomain: "libapp-852f2.firebaseapp.com",   databaseURL: "https://libapp-852f2.firebaseio.com",   storageBucket: "libapp-852f2.appspot.com",   messagingSenderId: "900697377010"  }; 
-  firebase.initializeApp(config);
-  console.log('error');
+                }
+                
+            },
+            error: function(data, error) {
+            
+      $("#result").html(' ' + error);
+      console.log(typeof error);
+      $('#progress').html('');
 
-  const inputEmail = document.getElementById('inputEmail');
-  const inputPassword = document.getElementById('inputPassword');
-  const login = document.getElementById('login');
-
-  login.addEventListener('click', e => {
-    console.log('error');
-    const email = inputEmail.value;
-    const pass = inputPassword.value;
-    firebase.auth().signInWithEmailAndPassword(email, pass)
-      .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        if (errorCode === 'auth/wrong-password') {
-          alert('Wrong password.');
-        } else {
-          alert(errorMessage);
-        }
-        console.log(error);
-      });
-  });
-
-})();
+      }
+        });
+        return false;
+    });
+});
