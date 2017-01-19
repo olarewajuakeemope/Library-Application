@@ -188,7 +188,9 @@ app.post('/forms/addcat', function(req, res) {
 app.set('view engine', 'ejs');
 
 app.get('/dashboard', function(req, res) {
-    res.render('pages/index');
+	var bookCat = [];
+	bookCat = bookCategories;
+    res.render('pages/index', {bookCat: bookCat, catsAndBooks: catsAndBooks});
 });
 
 app.get('/controlpanel', function(req, res) {
