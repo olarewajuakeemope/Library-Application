@@ -7,6 +7,7 @@ var currID = '';
 
 var bookCategories = [];
 var allCats = [];
+var catsAndBooks = [];
 
 
 var app = express();
@@ -27,10 +28,27 @@ const auth = firebase.auth();
 ref.child('category').once('value').then(function(snap) {
   var i = 0;
 
+
   snap.forEach(function(childSnap){
   allCats.push(childSnap.key);
+  var tempbookarr = [];
+
+
+     childSnap.forEach(function(childrenSnap){
+     if(childrenSnap.val() !== true){
+     tempbookarr.push(childrenSnap.val());
+     console.log(childrenSnap.val());
+        }
+     });
+
+  catsAndBooks.push(tempbookarr);
+  console.log('catsAndBooks changed to array');
+  console.log(catsAndBooks);
   i++;
   });
+
+  console.log('catsAndBooks');
+  console.log(catsAndBooks);
 
   for (var i=0; i < allCats.length; i++) {
 	var currCat = {};
@@ -40,6 +58,7 @@ ref.child('category').once('value').then(function(snap) {
 });
 
 //end the select for book categories
+
 
 app.use('/cssFiles', express.static(__dirname + '/css'));
 app.use('/images', express.static(__dirname + '/img'));
@@ -175,9 +194,10 @@ app.get('/dashboard', function(req, res) {
 app.get('/controlpanel', function(req, res) {
 	var bookCat = [];
 	bookCat = bookCategories;
-	console.log(bookCategories);
-	console.log(bookCat);
-    res.render('pages/admin', {bookCat: bookCat});
+
+    console.log('catsAndBooks in render');
+    console.log(bookCat);
+    res.render('pages/admin', {bookCat: bookCat, catsAndBooks: catsAndBooks});
 });
 //my template engine ends
 
