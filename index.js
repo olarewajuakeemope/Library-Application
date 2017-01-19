@@ -4,6 +4,8 @@ var firebase = require('firebase');
 var bodyParser = require('body-parser');
 const adminID = 's9uc9dexFJXjEnmX3X52jY1YlG12';
 var currID = '';
+var bookCategories = [];
+currCat = {};
 
 var app = express();
 app.use(bodyParser.json());
@@ -18,6 +20,16 @@ firebase.initializeApp(config);
 var ref = firebase.database().ref();
 
 const auth = firebase.auth();
+
+//prepare the select for book categories
+ref.child('category').once('value').then(function(snap) {
+  snap.forEach(function(childSnap){
+  currCat.cat = childSnap.key;
+  bookCategories.push(currCat);
+  console.log(bookCategories);
+  });
+});
+//end the select for book categories
 
 app.use('/cssFiles', express.static(__dirname + '/css'));
 app.use('/images', express.static(__dirname + '/img'));
