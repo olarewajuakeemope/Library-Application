@@ -8,6 +8,12 @@ body {
 }
 
 
+/* CUSTOMIZE RESPONSE NOTIFICTION
+-------------------------------------------------- */
+#result {
+  color: blue;
+}
+
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 

@@ -15,6 +15,7 @@ var config = {   apiKey: "AIzaSyB89UfsZjSnvda76EdN4qwsjBfhvcqia78",   authDo
 
  
 firebase.initializeApp(config);
+var ref = firebase.database().ref();
 
 const auth = firebase.auth();
 
@@ -102,7 +103,7 @@ app.post('/forms/addbook', function(req, res) {
   var cat = String(req.body.cat);
   var qty = parseInt(req.body.qty);
 
-  var catref = firebase.database().ref().child('category');
+  var catref = ref.child('category');
   var catname = catref.child(cat);
   catname.push({
       name: name,
