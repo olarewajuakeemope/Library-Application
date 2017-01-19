@@ -15,7 +15,7 @@ $(function(){
                 if(data.error){
                   //console.log('inside the success if');
                   console.log(data.error);
-                  $("#result").html('data.error.message');
+                  $("#result").html(data.error.message);
                   $('#progress').html('');
                 }else{
                     //console.log('inside the windows');
@@ -26,7 +26,7 @@ $(function(){
             },
             error: function(data, error) {
       //console.log('inside the error');    
-      $("#result").html(' ' + error);
+      $("#result").html(error);
       console.log(typeof error);
       $('#progress').html('');
 

@@ -47,10 +47,11 @@ app.post('/forms/userprocess', function(req, res) {
       console.log('data');
       firebase.auth().onAuthStateChanged((user) => {
         if(user){
-          console.log(user.uid);     
+          console.log(user.uid);
+          res.json({});   
     }
       });
-      res.json({});
+      
     });
 })
 
@@ -85,9 +86,34 @@ app.post('/forms/loginprocess', function(req, res) {
     });
 })
 
+//add book begins
+app.post('/forms/addbook', function(req, res) {
+	firebase.auth().onAuthStateChanged((user) => {
+        if(user){
+        	console.log('user.uid');
+        	console.log(user.uid);
+            
+         }else{
+         	return res.json({url: '/forms/loginForm'});
+         }
+      });
+	console.log('running');
+  var name = req.body.name;
+  var cat = String(req.body.cat);
+  var qty = parseInt(req.body.qty);
+
+  var catref = firebase.database().ref().child('category');
+  var catname = catref.child(cat);
+  catname.push({
+      name: name,
+      quantity: qty
+  });
+  var data = {};
+  res.send(data);
+})
+//add book ends
+
 //my template engine begins
-
-
 app.set('view engine', 'ejs');
 
 app.get('/dashboard', function(req, res) {

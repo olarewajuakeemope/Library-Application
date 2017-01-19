@@ -1,7 +1,7 @@
 $(function(){
     $('#validForm').bind('submit', function(e) {
         console.log('submit');
-        $('h5').append('<div id="progress">Processing...</div>');
+        $('#progress').html('Processing...');
         e.preventDefault();
         $("#result").html('');
         var data = {'email' : $('input[name=userEmail]').val(), 'pass' : $('input[name=userPassword]').val()};
