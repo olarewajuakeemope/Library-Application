@@ -4,8 +4,10 @@ var firebase = require('firebase');
 var bodyParser = require('body-parser');
 const adminID = 's9uc9dexFJXjEnmX3X52jY1YlG12';
 var currID = '';
+
 var bookCategories = [];
-currCat = {};
+var allCats = [];
+
 
 var app = express();
 app.use(bodyParser.json());
@@ -23,12 +25,20 @@ const auth = firebase.auth();
 
 //prepare the select for book categories
 ref.child('category').once('value').then(function(snap) {
+  var i = 0;
+
   snap.forEach(function(childSnap){
-  currCat.cat = childSnap.key;
-  bookCategories.push(currCat);
-  console.log(bookCategories);
+  allCats.push(childSnap.key);
+  i++;
   });
+
+  for (var i=0; i < allCats.length; i++) {
+	var currCat = {};
+	currCat.cat = allCats[i];
+	bookCategories[i] = currCat;
+}
 });
+
 //end the select for book categories
 
 app.use('/cssFiles', express.static(__dirname + '/css'));
@@ -101,12 +111,14 @@ app.post('/forms/loginprocess', function(req, res) {
 
 //add book begins
 app.post('/forms/addbook', function(req, res) {
+
 	firebase.auth().onAuthStateChanged((user) => {
         if(user){
         	console.log('user.uid');
         	console.log(user.uid);
             
          }else{
+         	console.log('/forms/loginForm');
          	return res.json({url: '/forms/loginForm'});
          }
       });
@@ -126,6 +138,33 @@ app.post('/forms/addbook', function(req, res) {
 })
 //add book ends
 
+
+//add cat
+app.post('/forms/addcat', function(req, res) {
+
+	firebase.auth().onAuthStateChanged((user) => {
+        if(user){
+        	console.log('user.uid');
+        	console.log(user.uid);
+            
+         }else{
+         	console.log('/forms/loginForm');
+         	return res.json({url: '/forms/loginForm'});
+         }
+      });
+	console.log('running add cat');
+  var name = req.body.name;
+  var updates = {};
+  console.log(name);
+  name = String(name);
+  updates['' + name] = true;
+  var catref = ref.child('category').update(updates);
+  var data = {};
+  res.send(data);
+})
+//add cat
+
+
 //my template engine begins
 app.set('view engine', 'ejs');
 
@@ -134,7 +173,11 @@ app.get('/dashboard', function(req, res) {
 });
 
 app.get('/controlpanel', function(req, res) {
-    res.render('pages/admin');
+	var bookCat = [];
+	bookCat = bookCategories;
+	console.log(bookCategories);
+	console.log(bookCat);
+    res.render('pages/admin', {bookCat: bookCat});
 });
 //my template engine ends
 

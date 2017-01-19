@@ -6,18 +6,33 @@
             <div class="col-lg-4">
                 <img class="img-circle" src="../images/trans.png" alt="Generic placeholder image" width="140" height="140">
                 <h2>Book Categories</h2>
+
+
                 <p id="addnew"><a class="btn btn-default" href="#" role="button">Add a New Book &raquo;</a></p>
                 <div id="result"></div>
                 <div id="form" class="hide">
+
+                <div id="addcatdiv">
+                <h4 class='text-left'>Add New Category</h4>
+        <form class='form-signin' id='addcat' >
+        <label for='newcat' class='sr-only'>New Book Category</label>
+        <input type='text' name='inputcat' id='newcat' class='form-control' placeholder='New Book Category' required autofocus>
+        <button class='btn btn-md btn-primary btn-block' id='submitcat' type='button'>Add Book Category</button>
+        </form></div>
+                    
+
+                    <h4 class='text-left'>Add New Book</h4>
                     <form class='form-signin' id='validForm' >
         <label for='bookname' class='sr-only'>Book Name</label>
         <input type='text' name='inputname' id='bookname' class='form-control' placeholder='Book Name' required autofocus>
         <label for='bookcat' class='sr-only'>Category</label>
         <select name='cat' id='bookcat' class='form-control' required>
     <option>select category</option>
-    <option>adventure</option>
-    <option>academic</option>
-    <option>relaxation</option>
+
+    <% bookCat.forEach(function(bookCategory) {%><option>
+        <%= bookCategory.cat %></option>
+     <% }); %>
+
   </select>
         <label for='qty' class='sr-only'>Quantity</label>
         <input type='text' name='inputqty' id='qty' class='form-control' placeholder='Enter Quantity in Figures' required>
@@ -26,7 +41,14 @@
         <button class='btn btn-md btn-primary btn-block' id='submitbook' type='button'>Add Book</button>
         </form>
                 </div>
+
+
                 <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+            
+
+
+
+
             </div>
             <!-- /.col-lg-4 -->
             <div class="col-lg-4">
