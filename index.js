@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var firebase = require('firebase');
 var bodyParser = require('body-parser');
-const adminID = 's9uc9dexFJXjEnmX3X52jY1YlG12';
+const adminID = 'keYLSelqM0aYx2USxGcIxAbylRn2';
 var currID = '';
 
 var bookCategories = [];
