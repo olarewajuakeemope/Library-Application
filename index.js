@@ -24,8 +24,7 @@ var ref = firebase.database().ref();
 
 const auth = firebase.auth();
 
-//prepare the select for book categories
-ref.child('category').once('value').then(function(snap) {
+var processBooks = function(snap) {
   var i = 0;
 
 
@@ -52,7 +51,12 @@ ref.child('category').once('value').then(function(snap) {
     currCat.cat = allCats[i];
     bookCategories[i] = currCat;
   }
-});
+}
+
+//prepare the select for book categories
+ref.child('category').on('value', processBooks);
+
+ref.child('category').on('child_changed', processBooks)
 
 //end the select for book categories
 
@@ -91,28 +95,33 @@ app.post('/forms/userprocess', function(req, res) {
         }
       });
 
+    });
+})
+
 
 //borrow books begin
 app.post('/forms/borrow', function(req, res) {
-  var category = req.body.category;
-  var key = req.body.key;
-  var catreference = ref.child('category');
-  var bookref = catreference.child(category).once('value').then(function(snap) {
+    var category = req.body.category;
+    var key = req.body.key;
+    var qty = req.body.qty;
+    qty--;
+    var catreference = ref.child('category');
+    var bookref = catreference.child(category).once('value').then(function(snap) {
 
-  snap.forEach(function(childSnap) {
-    if(childSnap.key === key){
-          console.log(childSnap);
-    }
+      snap.forEach(function(childSnap) {
+        if (childSnap.key === key) {
+          console.log(childSnap.val());
+          childSnap.ref.update({
+            quantity: qty
+          });
+        }
 
-  });
-  return res.json({});
-});
-
-})
-//borrow books end
-
+      });
+      return res.json({});
     });
-})
+
+  })
+  //borrow books end
 
 
 app.post('/forms/loginprocess', function(req, res) {
@@ -211,8 +220,8 @@ app.get('/controlpanel', function(req, res) {
   var bookCat = [];
   bookCat = bookCategories;
 
-  console.log('catsAndBooks in render');
-  console.log(bookCat);
+  console.log('bookCategories in admin render');
+  console.log(bookCategories);
   res.render('pages/admin', { bookCat: bookCat, catsAndBooks: catsAndBooks });
 });
 //my template engine ends
