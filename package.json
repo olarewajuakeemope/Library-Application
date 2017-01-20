@@ -14,7 +14,12 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/olarewajuakeemope/Library-Application/issues"
+  },"engines": {
+    "node": "4.4.4"
   },
+  "scripts": {
+  "start": "node index.js"
+},
   "homepage": "https://github.com/olarewajuakeemope/Library-Application#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
