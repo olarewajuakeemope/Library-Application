@@ -3,18 +3,18 @@
 <div class="container marketing">
         <!-- Three columns of text below the carousel -->
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
             <img class="img-circle" src="../images/trans.png" alt="Generic placeholder image" width="140" height="140">
                 <h2>Book Categories</h2>
                 <p>
                 <div id="showbook"></div>
                   <% for(var i=0; i<bookCat.length; i++) { %>
-                     <h4 class='text-left'><%= bookCat[i].cat %></h4>
+                     <h4 class='text-left' style='color: white; background-color: #99c'><%= bookCat[i].cat %></h4>
 
                         <% if(catsAndBooks[i].length>0){ %>
                         <% for(var j=0; j<catsAndBooks[i].length; j++) { %>
-                         <p class='text-left' id='clickedbook'><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining
-                          </p><p><a href="#" class="btn btn-info" role="button">Borrow</a></p><br>
+                         <p class='text-left' id='clickedbook' style='background-color: #ddd'><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining
+                          </p><p><a href="#" class="btn btn-info borrow" data-category="<%= catsAndBooks[i][j].categoryKey %>" data-id="<%= catsAndBooks[i][j].key %>" role="button">Borrow</a></p><br>
                        <% }; %>
                       <% } %> 
 
@@ -23,5 +23,4 @@
             </div>
             <!-- /.col-lg-4 -->
         </div>
-
 <% include ../partials/footer %>

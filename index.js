@@ -12,7 +12,7 @@ var catsAndBooks = [];
 
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 var router = express.Router();
 
  
@@ -29,32 +29,29 @@ ref.child('category').once('value').then(function(snap) {
   var i = 0;
 
 
-  snap.forEach(function(childSnap){
-  allCats.push(childSnap.key);
-  var tempbookarr = [];
+  snap.forEach(function(childSnap) {
+    allCats.push(childSnap.key);
+    var tempbookarr = [];
 
 
-     childSnap.forEach(function(childrenSnap){
-     if(childrenSnap.val() !== true){
-     tempbookarr.push(childrenSnap.val());
-     console.log(childrenSnap.key);
-        }
-     });
+    childSnap.forEach(function(childrenSnap) {
+      if (childrenSnap.val() !== true) {
+        var book_ = {};
+        book_['key'] = childrenSnap.key;
+        book_['categoryKey'] = childSnap.key;
+        tempbookarr.push(Object.assign(book_, childrenSnap.val()));
+      }
+    });
 
-  catsAndBooks.push(tempbookarr);
-  console.log('catsAndBooks changed to array');
-  console.log(catsAndBooks);
-  i++;
+    catsAndBooks.push(tempbookarr);
+    i++;
   });
 
-  console.log('catsAndBooks');
-  console.log(catsAndBooks);
-
-  for (var i=0; i < allCats.length; i++) {
-	var currCat = {};
-	currCat.cat = allCats[i];
-	bookCategories[i] = currCat;
-}
+  for (var i = 0; i < allCats.length; i++) {
+    var currCat = {};
+    currCat.cat = allCats[i];
+    bookCategories[i] = currCat;
+  }
 });
 
 //end the select for book categories
@@ -88,14 +85,35 @@ app.post('/forms/userprocess', function(req, res) {
     }).then(function(data) {
       console.log('data');
       firebase.auth().onAuthStateChanged((user) => {
-        if(user){
+        if (user) {
           console.log(user.uid);
-          res.json({});   
-    }
+          res.json({});
+        }
       });
-      
+
+
+//borrow books begin
+app.post('/forms/borrow', function(req, res) {
+  var category = req.body.category;
+  var key = req.body.key;
+  var catreference = ref.child('category');
+  var bookref = catreference.child(category).once('value').then(function(snap) {
+
+  snap.forEach(function(childSnap) {
+    if(childSnap.key === key){
+          console.log(childSnap);
+    }
+
+  });
+  return res.json({});
+});
+
+})
+//borrow books end
+
     });
 })
+
 
 app.post('/forms/loginprocess', function(req, res) {
   var email = req.body.email;
@@ -104,98 +122,98 @@ app.post('/forms/loginprocess', function(req, res) {
     .catch(function(error) {
       // Handle Errors here.
       console.log('inside the catch');
-        console.log('error');
-        console.log(error);
-        return res.json({ error: error });
+      console.log('error');
+      console.log(error);
+      return res.json({ error: error });
 
     }).then(function(data) {
       console.log('data');
       firebase.auth().onAuthStateChanged((user) => {
-        if(user){
+        if (user) {
           var adminUrl = '/dashboard';
           if (user.uid === adminID) {
-          adminUrl = '/controlpanel';
-          console.log(user.uid);
+            adminUrl = '/controlpanel';
+            console.log(user.uid);
+          }
+          res.json({ url: adminUrl });
         }
-        res.json({url: adminUrl});
-    }
       });
-      
+
     });
 })
 
 //add book begins
 app.post('/forms/addbook', function(req, res) {
 
-	firebase.auth().onAuthStateChanged((user) => {
-        if(user){
-        	console.log('user.uid');
-        	console.log(user.uid);
-            
-         }else{
-         	console.log('/forms/loginForm');
-         	return res.json({url: '/forms/loginForm'});
-         }
-      });
-	console.log('running');
-  var name = req.body.name;
-  var cat = String(req.body.cat);
-  var qty = parseInt(req.body.qty);
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log('user.uid');
+        console.log(user.uid);
 
-  var catref = ref.child('category');
-  var catname = catref.child(cat);
-  catname.push({
+      } else {
+        console.log('/forms/loginForm');
+        return res.json({ url: '/forms/loginForm' });
+      }
+    });
+    console.log('running');
+    var name = req.body.name;
+    var cat = String(req.body.cat);
+    var qty = parseInt(req.body.qty);
+
+    var catref = ref.child('category');
+    var catname = catref.child(cat);
+    catname.push({
       name: name,
       quantity: qty
-  });
-  var data = {};
-  res.send(data);
-})
-//add book ends
+    });
+    var data = {};
+    res.send(data);
+  })
+  //add book ends
 
 
 //add cat
 app.post('/forms/addcat', function(req, res) {
 
-	firebase.auth().onAuthStateChanged((user) => {
-        if(user){
-        	console.log('user.uid');
-        	console.log(user.uid);
-            
-         }else{
-         	console.log('/forms/loginForm');
-         	return res.json({url: '/forms/loginForm'});
-         }
-      });
-	console.log('running add cat');
-  var name = req.body.name;
-  var updates = {};
-  console.log(name);
-  name = String(name);
-  updates['' + name] = true;
-  var catref = ref.child('category').update(updates);
-  var data = {};
-  res.send(data);
-})
-//add cat
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log('user.uid');
+        console.log(user.uid);
+
+      } else {
+        console.log('/forms/loginForm');
+        return res.json({ url: '/forms/loginForm' });
+      }
+    });
+    console.log('running add cat');
+    var name = req.body.name;
+    var updates = {};
+    console.log(name);
+    name = String(name);
+    updates['' + name] = true;
+    var catref = ref.child('category').update(updates);
+    var data = {};
+    res.send(data);
+  })
+  //add cat
 
 
 //my template engine begins
 app.set('view engine', 'ejs');
 
 app.get('/dashboard', function(req, res) {
-	var bookCat = [];
-	bookCat = bookCategories;
-    res.render('pages/index', {bookCat: bookCat, catsAndBooks: catsAndBooks});
+  var bookCat = [];
+  bookCat = bookCategories;
+  res.render('pages/index', { bookCat: bookCat, catsAndBooks: catsAndBooks });
 });
 
 app.get('/controlpanel', function(req, res) {
-	var bookCat = [];
-	bookCat = bookCategories;
+  var bookCat = [];
+  bookCat = bookCategories;
 
-    console.log('catsAndBooks in render');
-    console.log(bookCat);
-    res.render('pages/admin', {bookCat: bookCat, catsAndBooks: catsAndBooks});
+  console.log('catsAndBooks in render');
+  console.log(bookCat);
+  res.render('pages/admin', { bookCat: bookCat, catsAndBooks: catsAndBooks });
 });
 //my template engine ends
 

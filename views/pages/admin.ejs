@@ -3,7 +3,7 @@
 <div class="container marketing">
         <!-- Three columns of text below the carousel -->
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <img class="img-circle" src="../images/trans.png" alt="Generic placeholder image" width="140" height="140">
                 <h2>Book Categories</h2>
 
@@ -40,23 +40,25 @@
         </form>
                 </div>
 
-
+   <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
                 <p>
                 <div id="showbook"></div>
                   <% for(var i=0; i<bookCat.length; i++) { %>
-                     <h4 class='text-left'><%= bookCat[i].cat %></h4>
+                     <h4 style='color: white; background-color: #99c' class='text-left'><%= bookCat[i].cat %></h4>
 
                         <% if(catsAndBooks[i].length>0){ %>
                         <% for(var j=0; j<catsAndBooks[i].length; j++) { %>
-                         <p class='text-left' id='clickedbook'><a href="#" class="btn btn-info" role="button"><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining</a></p>
+                         <p class='text-left' id='clickedbook' style='background-color: #ddd'><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining</p>
                        <% }; %>
                       <% } %> 
 
                   <br><% }; %>
                 </p>
-
+             </div>
             </div>
-            <!-- /.col-lg-4 -->
+ <!-- /.col-lg-6 -->
         </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
