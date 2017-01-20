@@ -4,6 +4,7 @@
   "description": "Andela bootcamp final project",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,9 +18,6 @@
   },"engines": {
     "node": "4.4.4"
   },
-  "scripts": {
-  "start": "node index.js"
-},
   "homepage": "https://github.com/olarewajuakeemope/Library-Application#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
