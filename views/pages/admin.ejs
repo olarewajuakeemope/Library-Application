@@ -51,6 +51,9 @@
                         <% if(catsAndBooks[i].length>0){ %>
                         <% for(var j=0; j<catsAndBooks[i].length; j++) { %>
                          <p class='text-left' id='clickedbook' style='background-color: #ddd'><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining</p>
+
+                         <p><a href="#" class="btn btn-info delete" data-quantity="<%= catsAndBooks[i][j].quantity %>" data-category="<%= catsAndBooks[i][j].categoryKey %>" data-id="<%= catsAndBooks[i][j].key %>" role="button">Delete</a></p><br>
+
                        <% }; %>
                       <% } %> 
 

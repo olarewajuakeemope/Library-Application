@@ -54,11 +54,15 @@ var processBooks = function(snap) {
 }
 
 //prepare the select for book categories
-ref.child('category').on('value', processBooks);
+//ref.child('category').on('value', processBooks);
 
-ref.child('category').on('child_changed', processBooks)
+//ref.child('category').on('child_changed', processBooks)
+
+ref.child('category').once('child_changed').then(processBooks)
+ref.child('category').once('value').then(processBooks)
 
 //end the select for book categories
+
 
 
 app.use('/cssFiles', express.static(__dirname + '/css'));
