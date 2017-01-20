@@ -217,6 +217,6 @@ router.get('/signupForm', function(req, res) {
   res.sendFile('signupForm.html', { root: path.join(__dirname, './files') });
 })
 
-app.listen(5000, function() {
+app.listen(process.env.PORT || 5000, function() {
   console.log('Listening at port 5000!')
 })
