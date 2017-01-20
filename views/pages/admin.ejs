@@ -59,68 +59,6 @@
             <!-- /.col-lg-4 -->
         </div>
 
-
-
-
-
-        <div class="container marketing">
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
-            <div class="col-lg-4">
-                <img class="img-circle" src="../images/trans.png" alt="Generic placeholder image" width="140" height="140">
-                <h2>Book Categories</h2>
-
-
-                <p id="addnew"><a class="btn btn-default" href="#" role="button">Add a New Book &raquo;</a></p>
-                <div id="result"></div>
-                <div id="form" class="hide">
-
-                <div id="addcatdiv">
-                <h4 class='text-left'>Add New Category</h4>
-        <form class='form-signin' id='addcat' >
-        <label for='newcat' class='sr-only'>New Book Category</label>
-        <input type='text' name='inputcat' id='newcat' class='form-control' placeholder='New Book Category' required autofocus>
-        <button class='btn btn-md btn-primary btn-block' id='submitcat' type='button'>Add Book Category</button>
-        </form></div>
-                    
-
-                    <h4 class='text-left'>Add New Book</h4>
-                    <form class='form-signin' id='validForm' >
-        <label for='bookname' class='sr-only'>Book Name</label>
-        <input type='text' name='inputname' id='bookname' class='form-control' placeholder='Book Name' required autofocus>
-        <label for='bookcat' class='sr-only'>Category</label>
-        <select name='cat' id='bookcat' class='form-control' required>
-    <option>select category</option>
-
-    <% bookCat.forEach(function(bookCategory) {%><option>
-        <%= bookCategory.cat %></option>
-     <% }); %>
-
-  </select>
-        <label for='qty' class='sr-only'>Quantity</label>
-        <input type='text' name='inputqty' id='qty' class='form-control' placeholder='Enter Quantity in Figures' required>
-        <button class='btn btn-md btn-primary btn-block' id='submitbook' type='button'>Add Book</button>
-        </form>
-                </div>
-
-
-                <p>
-                <div id="showbook"></div>
-                  <% for(var i=0; i<bookCat.length; i++) { %>
-                     <h4 class='text-left'><%= bookCat[i].cat %></h4>
-
-                        <% if(catsAndBooks[i].length>0){ %>
-                        <% for(var j=0; j<catsAndBooks[i].length; j++) { %>
-                         <p class='text-left' id='clickedbook'><a href="#" class="btn btn-info" role="button"><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining</a></p>
-                       <% }; %>
-                      <% } %> 
-
-                  <br><% }; %>
-                </p>
-
-            </div>
-            <!-- /.col-lg-4 -->
-        </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <script src="../jsFiles/admin.js"></script>
 

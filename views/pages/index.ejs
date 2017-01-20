@@ -13,7 +13,8 @@
 
                         <% if(catsAndBooks[i].length>0){ %>
                         <% for(var j=0; j<catsAndBooks[i].length; j++) { %>
-                         <p class='text-left' id='clickedbook'><a href="#" class="btn btn-info" role="button"><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining</a></p>
+                         <p class='text-left' id='clickedbook'><%= catsAndBooks[i][j].name %> - <%= catsAndBooks[i][j].quantity %> remaining
+                          </p><p><a href="#" class="btn btn-info" role="button">Borrow</a></p><br>
                        <% }; %>
                       <% } %> 
 

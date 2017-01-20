@@ -37,7 +37,7 @@ ref.child('category').once('value').then(function(snap) {
      childSnap.forEach(function(childrenSnap){
      if(childrenSnap.val() !== true){
      tempbookarr.push(childrenSnap.val());
-     console.log(childrenSnap.val());
+     console.log(childrenSnap.key);
         }
      });
 
@@ -104,14 +104,10 @@ app.post('/forms/loginprocess', function(req, res) {
     .catch(function(error) {
       // Handle Errors here.
       console.log('inside the catch');
-      var errorCode = error.code;
-      if (errorCode == 'auth/wrong-password') {
-        res.send('The password is too weak.');
-      } else {
-        res.json({ error: error });
         console.log('error');
         console.log(error);
-      }
+        return res.json({ error: error });
+
     }).then(function(data) {
       console.log('data');
       firebase.auth().onAuthStateChanged((user) => {
